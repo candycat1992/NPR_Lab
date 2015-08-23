@@ -64,7 +64,7 @@ Shader "NPR/Pencil Sketch Background Shading" {
 				fixed2 scrPos = i.scrPos.xy / i.scrPos.w;
 				fixed3 fragColor = tex2D(_Paper, scrPos);
 
-				return fixed4(fragColor, 1.0);
+				return fixed4(fragColor, 1.0)*_Color;
 			} 
 
 			ENDCG
