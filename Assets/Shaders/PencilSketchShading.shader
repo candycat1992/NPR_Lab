@@ -35,19 +35,16 @@ Shader "NPR/Pencil Sketch Shading" {
            	
             float _Outline;
  
-            struct a2v
-            {
+            struct a2v {
                 float4 vertex : POSITION;
                 float3 normal : NORMAL;
             }; 
  
-            struct v2f
-            {
+            struct v2f {
                 float4 pos : POSITION;
             };
  
-            v2f vert (a2v v)
-            {
+            v2f vert (a2v v) {
                 v2f o;
                 
                 float4 pos = mul( UNITY_MATRIX_MV, v.vertex); 
@@ -59,8 +56,7 @@ Shader "NPR/Pencil Sketch Shading" {
                 return o;
             }
  
-            float4 frag(v2f i) : COLOR  
-            { 
+            float4 frag(v2f i) : COLOR { 
             	return float4(0, 0, 0, 1);               
             } 
  
@@ -69,9 +65,6 @@ Shader "NPR/Pencil Sketch Shading" {
         
         Pass {
 			Tags { "LightMode"="ForwardBase" }
-			
-			Cull Back 
-			Lighting On
 
 			CGPROGRAM
 
@@ -98,44 +91,52 @@ Shader "NPR/Pencil Sketch Shading" {
 			sampler2D _Level5;
 			sampler2D _Level6;
  
- 			struct a2v
-			{
+ 			struct a2v {
 				float4 vertex : POSITION;
 				float3 normal : NORMAL;
 				float4 texcoord : TEXCOORD0;
 				float4 tangent : TANGENT;
 			}; 
 
-			struct v2f
-			{
+			struct v2f {
 				float4 pos : POSITION;
 				float4 scrPos : TEXCOORD0;
 				float3 worldNormal : TEXCOORD1;
-				float3 worldLightDir : TEXCOORD2;		
-				LIGHTING_COORDS(3,4)		
+				float3 worldLightDir : TEXCOORD2;
+				float3 worldPos : TEXCOORD3;	
+				// The macro in Unity 4
+				LIGHTING_COORDS(4, 5)
+				// Or use macro in Unity 5
+//                SHADOW_COORDS(4)
 			};
 			
-			v2f vert (a2v v)
-			{
+			v2f vert (a2v v) {
 				v2f o;
 
 				o.pos = mul( UNITY_MATRIX_MVP, v.vertex);
 				o.worldNormal  = mul(v.normal, (float3x3)_World2Object);
 				o.worldLightDir = WorldSpaceLightDir(v.vertex);
+				o.worldPos = mul(_Object2World, v.vertex).xyz;
 				o.scrPos = ComputeScreenPos(o.pos);
 				
-				TRANSFER_VERTEX_TO_FRAGMENT(o);
+				// The macro in Unity 4
+				// Pass lighting information to pixel shader
+  				TRANSFER_VERTEX_TO_FRAGMENT(o);
+  				// Or use the macro in Unity 5
+//                TRANSFER_SHADOW(o);
 
 				return o;
 			}
 			
-			float4 frag(v2f i) : COLOR  
-			{ 
+			float4 frag(v2f i) : COLOR { 
 				fixed3 worldNormal = normalize(i.worldNormal);
 				fixed3 worldLightDir = normalize(i.worldLightDir);
 				fixed2 scrPos = i.scrPos.xy / i.scrPos.w * _TileFactor;
 				
-				float atten = LIGHT_ATTENUATION(i);
+				// The macro in Unity 4
+				fixed atten = LIGHT_ATTENUATION(i);
+				//  Or use the macro in Unity 5
+//                UNITY_LIGHT_ATTENUATION(atten, i, i.worldPos);
 				
 				fixed diff = (dot(worldNormal, worldLightDir) * 0.5 + 0.5) * atten * 6.0;
 				fixed3 fragColor;
@@ -153,7 +154,108 @@ Shader "NPR/Pencil Sketch Shading" {
 					fragColor = tex2D(_Level6, scrPos).rgb;
 				}
 				
-				fragColor *= _Color.rgb;
+				fragColor *= _Color.rgb * _LightColor0.rgb;
+				
+				return fixed4(fragColor, 1.0);
+			} 
+
+			ENDCG
+		}
+		
+		Pass {
+			Tags { "LightMode"="ForwardAdd" }
+			
+			Blend One One
+
+			CGPROGRAM
+
+			#pragma vertex vert
+			#pragma fragment frag
+			
+			#pragma multi_compile_fwdadd
+			
+			#pragma glsl
+
+			#include "UnityCG.cginc"
+			#include "Lighting.cginc"
+			#include "AutoLight.cginc"
+			#include "UnityShaderVariables.cginc"
+			
+			#define DegreeToRadian 0.0174533
+			
+			fixed4 _Color;
+			float _TileFactor;
+			sampler2D _Level1;
+			sampler2D _Level2;
+			sampler2D _Level3;
+			sampler2D _Level4;
+			sampler2D _Level5;
+			sampler2D _Level6;
+ 
+ 			struct a2v {
+				float4 vertex : POSITION;
+				float3 normal : NORMAL;
+				float4 texcoord : TEXCOORD0;
+				float4 tangent : TANGENT;
+			}; 
+
+			struct v2f {
+				float4 pos : POSITION;
+				float4 scrPos : TEXCOORD0;
+				float3 worldNormal : TEXCOORD1;
+				float3 worldLightDir : TEXCOORD2;
+				float3 worldPos : TEXCOORD3;	
+				// The macro in Unity 4
+				LIGHTING_COORDS(4, 5)
+				// Or use macro in Unity 5
+//                SHADOW_COORDS(4)
+			};
+			
+			v2f vert (a2v v) {
+				v2f o;
+
+				o.pos = mul( UNITY_MATRIX_MVP, v.vertex);
+				o.worldNormal  = mul(v.normal, (float3x3)_World2Object);
+				o.worldLightDir = WorldSpaceLightDir(v.vertex);
+				o.worldPos = mul(_Object2World, v.vertex).xyz;
+				o.scrPos = ComputeScreenPos(o.pos);
+				
+				// The macro in Unity 4
+				// Pass lighting information to pixel shader
+  				TRANSFER_VERTEX_TO_FRAGMENT(o);
+  				// Or use the macro in Unity 5
+//                TRANSFER_SHADOW(o);
+
+				return o;
+			}
+			
+			float4 frag(v2f i) : COLOR { 
+				fixed3 worldNormal = normalize(i.worldNormal);
+				fixed3 worldLightDir = normalize(i.worldLightDir);
+				fixed2 scrPos = i.scrPos.xy / i.scrPos.w * _TileFactor;
+				
+				// The macro in Unity 4
+				fixed atten = LIGHT_ATTENUATION(i);
+				//  Or use the macro in Unity 5
+//                UNITY_LIGHT_ATTENUATION(atten, i, i.worldPos);
+				
+				fixed diff = (dot(worldNormal, worldLightDir) * 0.5 + 0.5) * atten * 6.0;
+				fixed3 fragColor;
+				if (diff < 1.0) {
+				 	fragColor = tex2D(_Level1, scrPos).rgb;
+				} else if (diff < 2.0) {
+					fragColor = tex2D(_Level2, scrPos).rgb;
+				} else if (diff < 3.0) {
+					fragColor = tex2D(_Level3, scrPos).rgb;
+				} else if (diff < 4.0) {
+					fragColor = tex2D(_Level4, scrPos).rgb;
+				} else if (diff < 5.0) {
+					fragColor = tex2D(_Level5, scrPos).rgb;
+				} else {
+					fragColor = tex2D(_Level6, scrPos).rgb;
+				}
+				
+				fragColor *= _Color.rgb * _LightColor0.rgb;
 				
 				return fixed4(fragColor, 1.0);
 			} 

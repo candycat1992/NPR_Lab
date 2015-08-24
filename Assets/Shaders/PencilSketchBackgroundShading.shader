@@ -35,22 +35,19 @@ Shader "NPR/Pencil Sketch Background Shading" {
 			fixed4 _Color;
 			sampler2D _Paper;
 			
- 			struct a2v
-			{
+ 			struct a2v {
 				float4 vertex : POSITION;
 				float3 normal : NORMAL;
 				float4 texcoord : TEXCOORD0;
 				float4 tangent : TANGENT;
 			}; 
 
-			struct v2f
-			{
+			struct v2f {
 				float4 pos : POSITION;
 				float4 scrPos : TEXCOORD0;		
 			};
 			
-			v2f vert (a2v v)
-			{
+			v2f vert (a2v v) {
 				v2f o;
 
 				o.pos = mul( UNITY_MATRIX_MVP, v.vertex);
@@ -59,8 +56,7 @@ Shader "NPR/Pencil Sketch Background Shading" {
 				return o;
 			}
 			
-			float4 frag(v2f i) : COLOR  
-			{
+			float4 frag(v2f i) : COLOR {
 				fixed2 scrPos = i.scrPos.xy / i.scrPos.w;
 				fixed3 fragColor = tex2D(_Paper, scrPos);
 
