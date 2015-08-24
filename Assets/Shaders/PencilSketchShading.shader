@@ -153,6 +153,8 @@ Shader "NPR/Pencil Sketch Shading" {
 					fragColor = tex2D(_Level6, scrPos).rgb;
 				}
 				
+				fragColor *= _Color.rgb;
+				
 				return fixed4(fragColor, 1.0);
 			} 
 

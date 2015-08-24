@@ -135,10 +135,6 @@ Material:
         second: .5
       data:
         first:
-          name: _Outline
-        second: .0299999993
-      data:
-        first:
           name: _Parallax
         second: .0199999996
       data:
@@ -173,6 +169,10 @@ Material:
         first:
           name: _Metallic
         second: 0
+      data:
+        first:
+          name: _Outline
+        second: .0299999993
       data:
         first:
           name: _TileFactor
