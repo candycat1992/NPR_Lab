@@ -2,10 +2,11 @@
 ///  Reference: 	Lake A, Marshall C, Harris M, et al. Stylized rendering techniques for scalable real-time 3D animation[C]
 ///						Proceedings of the 1st international symposium on Non-photorealistic animation and rendering. ACM, 2000: 13-20.
 ///
-Shader "NPR/Pencil Sketch Shading" {
+Shader "NPR/Pencil Sketch/Pencil Sketch Shading" {
 	Properties {
 		_Color ("Diffuse Color", Color) = (1, 1, 1, 1)
 		_Outline ("Outline", Range(0.001, 1)) = 0.1
+		_OutlineColor ("Outline Color", Color) = (0, 0, 0, 1)
 		_TileFactor ("Tile Factor", Range(1, 10)) = 5
         _Level1 ("Level 1 (Darkest)", 2D) = "white" {}
         _Level2 ("Level 2 ", 2D) = "white" {}
@@ -18,50 +19,7 @@ Shader "NPR/Pencil Sketch Shading" {
         Tags { "RenderType"="Opaque" }
         LOD 200
         
-        Pass {
-        	Tags { "LightMode"="ForwardBase" }
-        	
-            Cull Front
-    		ZWrite On
- 
-            CGPROGRAM
-            
-            #pragma vertex vert
-            #pragma fragment frag
-            
-            #pragma multi_compile_fwdbase
- 
-           	#include "UnityCG.cginc"
-           	
-            float _Outline;
- 
-            struct a2v {
-                float4 vertex : POSITION;
-                float3 normal : NORMAL;
-            }; 
- 
-            struct v2f {
-                float4 pos : POSITION;
-            };
- 
-            v2f vert (a2v v) {
-                v2f o;
-                
-                float4 pos = mul( UNITY_MATRIX_MV, v.vertex); 
-				float3 normal = mul( (float3x3)UNITY_MATRIX_IT_MV, v.normal);  
-				normal.z = -0.5;
-				pos = pos + float4(normalize(normal),0) * _Outline;
-				o.pos = mul(UNITY_MATRIX_P, pos);
-				
-                return o;
-            }
- 
-            float4 frag(v2f i) : COLOR { 
-            	return float4(0, 0, 0, 1);               
-            } 
- 
-            ENDCG
-        }
+        UsePass "NPR/Cartoon/Antialiased Cel Shading/OUTLINE"
         
         Pass {
 			Tags { "LightMode"="ForwardBase" }
@@ -104,10 +62,7 @@ Shader "NPR/Pencil Sketch Shading" {
 				float3 worldNormal : TEXCOORD1;
 				float3 worldLightDir : TEXCOORD2;
 				float3 worldPos : TEXCOORD3;	
-				// The macro in Unity 4
-				LIGHTING_COORDS(4, 5)
-				// Or use macro in Unity 5
-//                SHADOW_COORDS(4)
+                SHADOW_COORDS(4)
 			};
 			
 			v2f vert (a2v v) {
@@ -119,11 +74,7 @@ Shader "NPR/Pencil Sketch Shading" {
 				o.worldPos = mul(_Object2World, v.vertex).xyz;
 				o.scrPos = ComputeScreenPos(o.pos);
 				
-				// The macro in Unity 4
-				// Pass lighting information to pixel shader
-  				TRANSFER_VERTEX_TO_FRAGMENT(o);
-  				// Or use the macro in Unity 5
-//                TRANSFER_SHADOW(o);
+                TRANSFER_SHADOW(o);
 
 				return o;
 			}
@@ -133,10 +84,7 @@ Shader "NPR/Pencil Sketch Shading" {
 				fixed3 worldLightDir = normalize(i.worldLightDir);
 				fixed2 scrPos = i.scrPos.xy / i.scrPos.w * _TileFactor;
 				
-				// The macro in Unity 4
-				fixed atten = LIGHT_ATTENUATION(i);
-				//  Or use the macro in Unity 5
-//                UNITY_LIGHT_ATTENUATION(atten, i, i.worldPos);
+                UNITY_LIGHT_ATTENUATION(atten, i, i.worldPos);
 				
 				fixed diff = (dot(worldNormal, worldLightDir) * 0.5 + 0.5) * atten * 6.0;
 				fixed3 fragColor;
@@ -205,10 +153,7 @@ Shader "NPR/Pencil Sketch Shading" {
 				float3 worldNormal : TEXCOORD1;
 				float3 worldLightDir : TEXCOORD2;
 				float3 worldPos : TEXCOORD3;	
-				// The macro in Unity 4
-				LIGHTING_COORDS(4, 5)
-				// Or use macro in Unity 5
-//                SHADOW_COORDS(4)
+                SHADOW_COORDS(4)
 			};
 			
 			v2f vert (a2v v) {
@@ -220,11 +165,7 @@ Shader "NPR/Pencil Sketch Shading" {
 				o.worldPos = mul(_Object2World, v.vertex).xyz;
 				o.scrPos = ComputeScreenPos(o.pos);
 				
-				// The macro in Unity 4
-				// Pass lighting information to pixel shader
-  				TRANSFER_VERTEX_TO_FRAGMENT(o);
-  				// Or use the macro in Unity 5
-//                TRANSFER_SHADOW(o);
+                TRANSFER_SHADOW(o);
 
 				return o;
 			}
@@ -234,10 +175,7 @@ Shader "NPR/Pencil Sketch Shading" {
 				fixed3 worldLightDir = normalize(i.worldLightDir);
 				fixed2 scrPos = i.scrPos.xy / i.scrPos.w * _TileFactor;
 				
-				// The macro in Unity 4
-				fixed atten = LIGHT_ATTENUATION(i);
-				//  Or use the macro in Unity 5
-//                UNITY_LIGHT_ATTENUATION(atten, i, i.worldPos);
+                UNITY_LIGHT_ATTENUATION(atten, i, i.worldPos);
 				
 				fixed diff = (dot(worldNormal, worldLightDir) * 0.5 + 0.5) * atten * 6.0;
 				fixed3 fragColor;

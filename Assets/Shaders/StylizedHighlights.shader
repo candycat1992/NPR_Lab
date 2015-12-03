@@ -8,6 +8,7 @@ Shader "NPR/Cartoon/Stylized Highlights" {
         _MainTex ("Base (RGB)", 2D) = "white" {}
         _Ramp ("Ramp Texture", 2D) = "white" {}
         _Outline ("Outline", Range(0,1)) = 0.1
+        _OutlineColor ("Outline Color", Color) = (0, 0, 0, 1)
         _Specular ("Specular", Color) = (1, 1, 1, 1)
 		_SpecularScale ("Specular Scale", Range(0, 0.05)) = 0.01
 		_TranslationX ("Translation X", Range(-1, 1)) = 0
@@ -26,50 +27,7 @@ Shader "NPR/Cartoon/Stylized Highlights" {
         Tags { "RenderType"="Opaque" }
         LOD 200
         
-        Pass {
-        	Tags { "LightMode"="ForwardBase" }
-        	
-        	Cull Front
-    		ZWrite On
- 
-            CGPROGRAM
-            
-            #pragma vertex vert
-            #pragma fragment frag
-            
-            #include "UnityCG.cginc"
-            
-            #pragma multi_compile_fwdbase
-           	
-            float _Outline;
- 
-            struct a2v {
-                float4 vertex : POSITION;
-                float3 normal : NORMAL;
-            }; 
- 
-            struct v2f {
-                float4 pos : POSITION;
-            };
- 
-            v2f vert (a2v v) {
-                v2f o;
-
-                float4 pos = mul( UNITY_MATRIX_MV, v.vertex); 
-				float3 normal = mul( (float3x3)UNITY_MATRIX_IT_MV, v.normal);  
-				normal.z = -0.5;
-				pos = pos + float4(normalize(normal),0) * _Outline;
-				o.pos = mul(UNITY_MATRIX_P, pos);
-				
-                return o;
-            }
- 
-            float4 frag(v2f i) : COLOR { 
-            	return float4(0, 0, 0, 1);               
-            } 
- 
-            ENDCG
-        }
+        UsePass "NPR/Cartoon/Antialiased Cel Shading/OUTLINE"
         
         Pass {
 			Tags { "LightMode"="ForwardBase" }
@@ -122,10 +80,7 @@ Shader "NPR/Cartoon/Stylized Highlights" {
 				float3 tangentLightDir : TEXCOORD2;
 				float3 tangentViewDir : TEXCOORD3;
 				float3 worldPos : TEXCOORD4;
-				// The macro in Unity 4
-				LIGHTING_COORDS(5, 6)
-				// Or use macro in Unity 5
-//                SHADOW_COORDS(5)
+                SHADOW_COORDS(5)
 			};
 			
 			v2f vert (a2v v) {
@@ -140,11 +95,7 @@ Shader "NPR/Cartoon/Stylized Highlights" {
 
 				o.worldPos = mul(_Object2World, v.vertex).xyz;
 				
-				// The macro in Unity 4
-				// Pass lighting information to pixel shader
-  				TRANSFER_VERTEX_TO_FRAGMENT(o);
-  				// Or use the macro in Unity 5
-//                TRANSFER_SHADOW(o);
+                TRANSFER_SHADOW(o);
 
 				return o;
 			}
@@ -203,13 +154,10 @@ Shader "NPR/Cartoon/Stylized Highlights" {
 				// Compute the lighting model
 				fixed3 ambient = UNITY_LIGHTMODEL_AMBIENT.xyz;
 				
-				// The macro in Unity 4
-				fixed atten = LIGHT_ATTENUATION(i);
-				//  Or use the macro in Unity 5
-//                UNITY_LIGHT_ATTENUATION(atten, i, i.worldPos);
+                UNITY_LIGHT_ATTENUATION(atten, i, i.worldPos);
 
 				fixed diff =  dot (tangentNormal, tangentLightDir);
-				diff = (diff * 0.5 + 0.5) * atten;
+				diff = diff * 0.5 + 0.5;
 				
 				fixed4 c = tex2D (_MainTex, i.uv);
 				fixed3 diffuseColor = c.rgb * _Color.rgb;
@@ -219,7 +167,7 @@ Shader "NPR/Cartoon/Stylized Highlights" {
 				fixed w = fwidth(spec) * 1.0;
 				fixed3 specular = lerp(fixed3(0, 0, 0), _Specular.rgb, smoothstep(-w, w, spec + _SpecularScale - 1));
 				
-				return fixed4(ambient + diffuse + specular, 1.0);
+				return fixed4(ambient + (diffuse + specular) * atten, 1.0);
 			} 
 
 			ENDCG
@@ -278,10 +226,7 @@ Shader "NPR/Cartoon/Stylized Highlights" {
 				float3 tangentLightDir : TEXCOORD2;
 				float3 tangentViewDir : TEXCOORD3;
 				float3 worldPos : TEXCOORD4;
-				// The macro in Unity 4
-				LIGHTING_COORDS(5, 6)
-				// Or use macro in Unity 5
-//                SHADOW_COORDS(5)
+                SHADOW_COORDS(5)
 			};
 			
 			v2f vert (a2v v) {
@@ -296,11 +241,7 @@ Shader "NPR/Cartoon/Stylized Highlights" {
 
 				o.worldPos = mul(_Object2World, v.vertex).xyz;
 				
-				// The macro in Unity 4
-				// Pass lighting information to pixel shader
-  				TRANSFER_VERTEX_TO_FRAGMENT(o);
-  				// Or use the macro in Unity 5
-//                TRANSFER_SHADOW(o);
+                TRANSFER_SHADOW(o);
 
 				return o;
 			}
@@ -355,14 +296,11 @@ Shader "NPR/Cartoon/Stylized Highlights" {
 				fixed sqrnormY = sin(pow(2 * sqrThetaY, _SquareN));
 				tangentHalfDir = tangentHalfDir - _SquareScale * (sqrnormX * tangentHalfDir.x * fixed3(1, 0, 0) + sqrnormY * tangentHalfDir.y * fixed3(0, 1, 0));
 				tangentHalfDir = normalize(tangentHalfDir);
-				
-				// The macro in Unity 4
-				fixed atten = LIGHT_ATTENUATION(i);
-				//  Or use the macro in Unity 5
-//                UNITY_LIGHT_ATTENUATION(atten, i, i.worldPos);
+
+                UNITY_LIGHT_ATTENUATION(atten, i, i.worldPos);
 
 				fixed diff =  dot (tangentNormal, tangentLightDir);
-				diff = (diff * 0.5 + 0.5) * atten;
+				diff = diff * 0.5 + 0.5;
 				
 				fixed4 c = tex2D (_MainTex, i.uv);
 				fixed3 diffuseColor = c.rgb * _Color.rgb;
@@ -372,7 +310,7 @@ Shader "NPR/Cartoon/Stylized Highlights" {
 				fixed w = fwidth(spec) * 1.0;
 				fixed3 specular = lerp(fixed3(0, 0, 0), _Specular.rgb, smoothstep(-w, w, spec + _SpecularScale - 1));
 				
-				return fixed4(diffuse + specular, 1.0);
+				return fixed4((diffuse + specular) * atten, 1.0);
 			} 
 
 			ENDCG

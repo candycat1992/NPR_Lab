@@ -5,6 +5,7 @@ Shader "NPR/Cartoon/Antialiased Cel Shading" {
 	Properties {
 		_MainTex ("Main Tex", 2D)  = "white" {}
 		_Outline ("Outline", Range(0,1)) = 0.1
+		_OutlineColor ("Outline Color", Color) = (0, 0, 0, 1)
 		_DiffuseColor ("Diffuse Color", Color) = (1, 1, 1, 1)
         _SpecularColor ("Specular Color", Color) = (1, 1, 1, 1)
         _Shininess ("Shininess", Range(1, 500)) = 40
@@ -16,49 +17,47 @@ Shader "NPR/Cartoon/Antialiased Cel Shading" {
         LOD 200
         
         Pass {
-        	Tags { "LightMode"="ForwardBase" }
-        	
-        	Cull Front
-    		ZWrite On
- 
-            CGPROGRAM
-            
-            #pragma vertex vert
-            #pragma fragment frag
-            
-            #pragma multi_compile_fwdbase
-            
-            #include "UnityCG.cginc"
-            
-            float _Outline;
- 
-            struct a2v {
-                float4 vertex : POSITION;
-                float3 normal : NORMAL;
-            }; 
- 
-            struct v2f {
-                float4 pos : POSITION;
-            };
- 
-            v2f vert (a2v v) {
-                v2f o;
-
-                float4 pos = mul( UNITY_MATRIX_MV, v.vertex); 
-				float3 normal = mul( (float3x3)UNITY_MATRIX_IT_MV, v.normal);  
+			NAME "OUTLINE"
+			
+			Cull Front
+			
+			CGPROGRAM
+			
+			#pragma vertex vert
+			#pragma fragment frag
+			
+			#include "UnityCG.cginc"
+			
+			float _Outline;
+			fixed4 _OutlineColor;
+			
+			struct a2v {
+				float4 vertex : POSITION;
+				float3 normal : NORMAL;
+			}; 
+			
+			struct v2f {
+			    float4 pos : SV_POSITION;
+			};
+			
+			v2f vert (a2v v) {
+				v2f o;
+				
+				float4 pos = mul(UNITY_MATRIX_MV, v.vertex); 
+				float3 normal = mul((float3x3)UNITY_MATRIX_IT_MV, v.normal);  
 				normal.z = -0.5;
-				pos = pos + float4(normalize(normal),0) * _Outline;
+				pos = pos + float4(normalize(normal), 0) * _Outline;
 				o.pos = mul(UNITY_MATRIX_P, pos);
 				
-                return o;
-            }
- 
-            float4 frag(v2f i) : COLOR { 
-            	return float4(0, 0, 0, 1);               
-            } 
- 
-            ENDCG
-        }
+				return o;
+			}
+			
+			float4 frag(v2f i) : SV_Target { 
+				return float4(_OutlineColor.rgb, 1);               
+			}
+			
+			ENDCG
+		}
  
         Pass {
 			Tags { "LightMode"="ForwardBase" }
@@ -94,10 +93,7 @@ Shader "NPR/Cartoon/Antialiased Cel Shading" {
 				float2 uv : TEXCOORD0;
 				fixed3 worldNormal : TEXCOORD1;
 				float3 worldPos : TEXCOORD2;
-				// The macro in Unity 4
-				LIGHTING_COORDS(3, 4)
-				// Or use macro in Unity 5
-//                SHADOW_COORDS(3)
+                SHADOW_COORDS(3)
 			};
 			
 			v2f vert (a2v v)
@@ -109,11 +105,7 @@ Shader "NPR/Cartoon/Antialiased Cel Shading" {
 				o.worldPos = mul(_Object2World, v.vertex).xyz;
 				o.uv = TRANSFORM_TEX (v.texcoord, _MainTex);
 				
-				// The macro in Unity 4
-				// Pass lighting information to pixel shader
-  				TRANSFER_VERTEX_TO_FRAGMENT(o);
-  				// Or use the macro in Unity 5
-//                TRANSFER_SHADOW(o);
+                TRANSFER_SHADOW(o);
                 
 				return o;
 			}
@@ -125,13 +117,10 @@ Shader "NPR/Cartoon/Antialiased Cel Shading" {
 				fixed3 worldViewDir = UnityWorldSpaceViewDir(i.worldPos);
 				fixed3 worldHalfDir = normalize(worldViewDir + worldLightDir);
 				
-				// The macro in Unity 4
-				fixed atten = LIGHT_ATTENUATION(i);
-				//  Or use the macro in Unity 5
-//                UNITY_LIGHT_ATTENUATION(atten, i, i.worldPos);
+                UNITY_LIGHT_ATTENUATION(atten, i, i.worldPos);
                 
 				fixed diff = dot(worldNormal, worldLightDir);
-				diff = (diff * 0.5 + 0.5) * atten;
+				diff = diff * 0.5 + 0.5;
 				fixed spec = max(0, dot(worldNormal, worldHalfDir));
 				spec = pow(spec, _Shininess);
 				
@@ -163,9 +152,7 @@ Shader "NPR/Cartoon/Antialiased Cel Shading" {
 				fixed3 diffuse = diff * _LightColor0.rgb * _DiffuseColor.rgb * texColor;
 				fixed3 specular = spec * _LightColor0.rgb * _SpecularColor.rgb;
 				
-				fixed3 fragColor = ambient + diffuse + specular;
-				
-				return fixed4(fragColor, 1);
+				return fixed4(ambient + (diffuse + specular) * atten, 1);
 			}
 
 			ENDCG
@@ -208,10 +195,7 @@ Shader "NPR/Cartoon/Antialiased Cel Shading" {
 				float2 uv : TEXCOORD0;
 				fixed3 worldNormal : TEXCOORD1;
 				float3 worldPos : TEXCOORD2;
-				// The macro in Unity 4
-				LIGHTING_COORDS(3, 4)
-				// Or use macro in Unity 5
-//                SHADOW_COORDS(3)
+                SHADOW_COORDS(3)
 			};
 			
 			v2f vert (a2v v)
@@ -223,11 +207,7 @@ Shader "NPR/Cartoon/Antialiased Cel Shading" {
 				o.worldPos = mul(_Object2World, v.vertex).xyz;
 				o.uv = TRANSFORM_TEX (v.texcoord, _MainTex);
 				
-				// The macro in Unity 4
-				// Pass lighting information to pixel shader
-  				TRANSFER_VERTEX_TO_FRAGMENT(o);
-  				// Or use the macro in Unity 5
-//                TRANSFER_SHADOW(o);
+                TRANSFER_SHADOW(o);
                 
 				return o;
 			}
@@ -239,10 +219,7 @@ Shader "NPR/Cartoon/Antialiased Cel Shading" {
 				fixed3 worldViewDir = UnityWorldSpaceViewDir(i.worldPos);
 				fixed3 worldHalfDir = normalize(worldViewDir + worldLightDir);
 				
-				// The macro in Unity 4
-				fixed atten = LIGHT_ATTENUATION(i);
-				//  Or use the macro in Unity 5
-//                UNITY_LIGHT_ATTENUATION(atten, i, i.worldPos);
+                UNITY_LIGHT_ATTENUATION(atten, i, i.worldPos);
                 
 				fixed diff = dot(worldNormal, worldLightDir);
 				diff = (diff * 0.5 + 0.5) * atten;
@@ -274,9 +251,7 @@ Shader "NPR/Cartoon/Antialiased Cel Shading" {
 				fixed3 diffuse = diff * _LightColor0.rgb * _DiffuseColor.rgb * texColor;
 				fixed3 specular = spec * _LightColor0.rgb * _SpecularColor.rgb;
 				
-				fixed3 fragColor = diffuse + specular;
-				
-				return fixed4(fragColor, 1);
+				return fixed4((diffuse + specular) * atten, 1);
 			}
 
 			ENDCG

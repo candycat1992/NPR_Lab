@@ -37,9 +37,6 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
---- !u!127 &3
-LevelGameManager:
-  m_ObjectHideFlags: 0
 --- !u!157 &4
 LightmapSettings:
   m_ObjectHideFlags: 0
@@ -68,6 +65,7 @@ LightmapSettings:
     m_TextureCompression: 1
     m_FinalGather: 0
     m_FinalGatherRayCount: 1024
+    m_ReflectionCompression: 2
   m_LightmapSnapshot: {fileID: 0}
   m_RuntimeCPUUsage: 25
 --- !u!196 &5
@@ -133,7 +131,7 @@ Prefab:
     - target: {fileID: 2336964, guid: bd836b719ca7448dcb6b3d32df0b6a5c, type: 2}
       propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: 2100000, guid: 7919064992b1f4fb7ba28aaa26d0feed, type: 2}
+      objectReference: {fileID: 2100000, guid: 96ad734fdc10145a488ed86ab4a09e89, type: 2}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: bd836b719ca7448dcb6b3d32df0b6a5c, type: 2}
   m_IsPrefabParent: 0
@@ -186,7 +184,7 @@ Camera:
   m_Enabled: 1
   serializedVersion: 2
   m_ClearFlags: 1
-  m_BackGroundColor: {r: .501960814, g: .501960814, b: .501960814, a: 1}
+  m_BackGroundColor: {r: .917647123, g: .854902029, b: .756862819, a: 1}
   m_NormalizedViewPortRect:
     serializedVersion: 2
     x: 0
@@ -205,6 +203,7 @@ Camera:
   m_RenderingPath: -1
   m_TargetTexture: {fileID: 0}
   m_TargetDisplay: 0
+  m_TargetEye: 3
   m_HDR: 0
   m_OcclusionCulling: 1
   m_StereoConvergence: 10

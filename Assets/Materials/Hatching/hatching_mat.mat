@@ -1,0 +1,380 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!21 &2100000
+Material:
+  serializedVersion: 6
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_Name: hatching_mat
+  m_Shader: {fileID: 4800000, guid: 20485dd2999f142d4919f08331249b0d, type: 3}
+  m_ShaderKeywords: 
+  m_LightmapFlags: 5
+  m_CustomRenderQueue: -1
+  stringTagMap: {}
+  m_SavedProperties:
+    serializedVersion: 2
+    m_TexEnvs:
+      data:
+        first:
+          name: _MainTex
+        second:
+          m_Texture: {fileID: 0}
+          m_Scale: {x: 1, y: 1}
+          m_Offset: {x: 0, y: 0}
+      data:
+        first:
+          name: _BumpMap
+        second:
+          m_Texture: {fileID: 0}
+          m_Scale: {x: 1, y: 1}
+          m_Offset: {x: 0, y: 0}
+      data:
+        first:
+          name: _DetailNormalMap
+        second:
+          m_Texture: {fileID: 0}
+          m_Scale: {x: 1, y: 1}
+          m_Offset: {x: 0, y: 0}
+      data:
+        first:
+          name: _Ramp
+        second:
+          m_Texture: {fileID: 2800000, guid: 84213d2a079dc40c2b876b747cc74cc1, type: 3}
+          m_Scale: {x: 1, y: 1}
+          m_Offset: {x: 0, y: 0}
+      data:
+        first:
+          name: _ParallaxMap
+        second:
+          m_Texture: {fileID: 0}
+          m_Scale: {x: 1, y: 1}
+          m_Offset: {x: 0, y: 0}
+      data:
+        first:
+          name: _OcclusionMap
+        second:
+          m_Texture: {fileID: 0}
+          m_Scale: {x: 1, y: 1}
+          m_Offset: {x: 0, y: 0}
+      data:
+        first:
+          name: _EmissionMap
+        second:
+          m_Texture: {fileID: 0}
+          m_Scale: {x: 1, y: 1}
+          m_Offset: {x: 0, y: 0}
+      data:
+        first:
+          name: _DetailMask
+        second:
+          m_Texture: {fileID: 0}
+          m_Scale: {x: 1, y: 1}
+          m_Offset: {x: 0, y: 0}
+      data:
+        first:
+          name: _DetailAlbedoMap
+        second:
+          m_Texture: {fileID: 0}
+          m_Scale: {x: 1, y: 1}
+          m_Offset: {x: 0, y: 0}
+      data:
+        first:
+          name: _MetallicGlossMap
+        second:
+          m_Texture: {fileID: 0}
+          m_Scale: {x: 1, y: 1}
+          m_Offset: {x: 0, y: 0}
+      data:
+        first:
+          name: _Hatch0
+        second:
+          m_Texture: {fileID: 2800000, guid: aceddeb2f245344488158327c204a2ec, type: 3}
+          m_Scale: {x: 1, y: 1}
+          m_Offset: {x: 0, y: 0}
+      data:
+        first:
+          name: _Hatch1
+        second:
+          m_Texture: {fileID: 2800000, guid: e337ea621f3e64898970a7faffaa183a, type: 3}
+          m_Scale: {x: 1, y: 1}
+          m_Offset: {x: 0, y: 0}
+      data:
+        first:
+          name: _Hatch2
+        second:
+          m_Texture: {fileID: 2800000, guid: cf52a0dcb89c54038961a31f008b8a9d, type: 3}
+          m_Scale: {x: 1, y: 1}
+          m_Offset: {x: 0, y: 0}
+      data:
+        first:
+          name: _Hatch3
+        second:
+          m_Texture: {fileID: 2800000, guid: 91a7dc5c454f54274a7b140a5f2cfbc8, type: 3}
+          m_Scale: {x: 1, y: 1}
+          m_Offset: {x: 0, y: 0}
+      data:
+        first:
+          name: _Hatch4
+        second:
+          m_Texture: {fileID: 2800000, guid: 195537faf06b64fbe81728e2a30e0984, type: 3}
+          m_Scale: {x: 1, y: 1}
+          m_Offset: {x: 0, y: 0}
+      data:
+        first:
+          name: _Hatch5
+        second:
+          m_Texture: {fileID: 2800000, guid: 988fc887265414e71a6114069675ece0, type: 3}
+          m_Scale: {x: 1, y: 1}
+          m_Offset: {x: 0, y: 0}
+      data:
+        first:
+          name: color_map
+        second:
+          m_Texture: {fileID: 0}
+          m_Scale: {x: 1, y: 1}
+          m_Offset: {x: 0, y: 0}
+      data:
+        first:
+          name: Hatch0
+        second:
+          m_Texture: {fileID: 0}
+          m_Scale: {x: 1, y: 1}
+          m_Offset: {x: 0, y: 0}
+      data:
+        first:
+          name: Hatch1
+        second:
+          m_Texture: {fileID: 0}
+          m_Scale: {x: 1, y: 1}
+          m_Offset: {x: 0, y: 0}
+      data:
+        first:
+          name: Hatch2
+        second:
+          m_Texture: {fileID: 0}
+          m_Scale: {x: 1, y: 1}
+          m_Offset: {x: 0, y: 0}
+      data:
+        first:
+          name: Hatch3
+        second:
+          m_Texture: {fileID: 0}
+          m_Scale: {x: 1, y: 1}
+          m_Offset: {x: 0, y: 0}
+      data:
+        first:
+          name: Hatch4
+        second:
+          m_Texture: {fileID: 0}
+          m_Scale: {x: 1, y: 1}
+          m_Offset: {x: 0, y: 0}
+      data:
+        first:
+          name: Hatch5
+        second:
+          m_Texture: {fileID: 0}
+          m_Scale: {x: 1, y: 1}
+          m_Offset: {x: 0, y: 0}
+    m_Floats:
+      data:
+        first:
+          name: _SrcBlend
+        second: 1
+      data:
+        first:
+          name: _DstBlend
+        second: 0
+      data:
+        first:
+          name: _Cutoff
+        second: .5
+      data:
+        first:
+          name: _Shininess
+        second: .899999976
+      data:
+        first:
+          name: _Tooniness
+        second: 4
+      data:
+        first:
+          name: _Outline
+        second: .00999999978
+      data:
+        first:
+          name: _Parallax
+        second: .0199999996
+      data:
+        first:
+          name: _ZWrite
+        second: 1
+      data:
+        first:
+          name: _Glossiness
+        second: .5
+      data:
+        first:
+          name: _BumpScale
+        second: 1
+      data:
+        first:
+          name: _OcclusionStrength
+        second: 1
+      data:
+        first:
+          name: _DetailNormalMapScale
+        second: 1
+      data:
+        first:
+          name: _UVSec
+        second: 0
+      data:
+        first:
+          name: _Mode
+        second: 0
+      data:
+        first:
+          name: _Metallic
+        second: 0
+      data:
+        first:
+          name: _Blue
+        second: .370000005
+      data:
+        first:
+          name: _Alpha
+        second: .469999999
+      data:
+        first:
+          name: _Yellow
+        second: .409999996
+      data:
+        first:
+          name: _Beta
+        second: .230000004
+      data:
+        first:
+          name: _Gloss
+        second: 1
+      data:
+        first:
+          name: _TileFactor
+        second: 2.5
+      data:
+        first:
+          name: _SpecularScale
+        second: .00910000037
+      data:
+        first:
+          name: _TranslationX
+        second: -.140000001
+      data:
+        first:
+          name: _TranslationY
+        second: 0
+      data:
+        first:
+          name: _RotationX
+        second: 105
+      data:
+        first:
+          name: _RotationY
+        second: -15
+      data:
+        first:
+          name: _RotationZ
+        second: 5
+      data:
+        first:
+          name: _ScaleX
+        second: -1
+      data:
+        first:
+          name: _ScaleY
+        second: -.469999999
+      data:
+        first:
+          name: _SplitX
+        second: 0
+      data:
+        first:
+          name: _SplitY
+        second: .189999998
+      data:
+        first:
+          name: _SquareN
+        second: 3.4000001
+      data:
+        first:
+          name: _SquareScale
+        second: 0
+      data:
+        first:
+          name: _DiffuseThreshold
+        second: -.579999983
+      data:
+        first:
+          name: _Diffusion
+        second: .180000007
+      data:
+        first:
+          name: _SpecDiffusion
+        second: .629999995
+      data:
+        first:
+          name: _OutlineThickness
+        second: .449999988
+      data:
+        first:
+          name: _OutlineDiffusion
+        second: 0
+      data:
+        first:
+          name: tile
+        second: 1
+    m_Colors:
+      data:
+        first:
+          name: _EmissionColor
+        second: {r: 0, g: 0, b: 0, a: 1}
+      data:
+        first:
+          name: _Color
+        second: {r: 1, g: 1, b: 1, a: 1}
+      data:
+        first:
+          name: _SpecColor
+        second: {r: 1, g: 1, b: 1, a: 1}
+      data:
+        first:
+          name: _Specular
+        second: {r: 1, g: 1, b: 1, a: 1}
+      data:
+        first:
+          name: _Rotation
+        second: {r: 50, g: 0, b: 0, a: 0}
+      data:
+        first:
+          name: _UnlitColor
+        second: {r: .5, g: .5, b: .5, a: 1}
+      data:
+        first:
+          name: _OutlineColor
+        second: {r: 0, g: 0, b: 0, a: 1}
+      data:
+        first:
+          name: _Ambient
+        second: {r: 0, g: 0, b: 0, a: 1}
+      data:
+        first:
+          name: _Lightpos
+        second: {r: 0, g: 0, b: 0, a: 1}
+      data:
+        first:
+          name: ambient_color
+        second: {r: .200000003, g: .200000003, b: .200000003, a: 1}
+      data:
+        first:
+          name: lightpos
+        second: {r: -10, g: 10, b: -10, a: 1}

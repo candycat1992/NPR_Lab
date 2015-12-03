@@ -7,6 +7,7 @@ Shader "NPR/Cartoon/Tone Based Shading" {
 		_Color ("Diffuse Color", Color) = (1, 1, 1, 1)
         _MainTex ("Base (RGB)", 2D) = "white" {}
         _Outline ("Outline", Range(0,1)) = 0.1
+        _OutlineColor ("Outline Color", Color) = (0, 0, 0, 1)
         _Specular ("Specular", Color) = (1, 1, 1, 1)
 		_Gloss ("Gloss", Range(1.0, 500)) = 20
         _Blue ("Blue", Range(0, 1)) = 0.5
@@ -18,50 +19,7 @@ Shader "NPR/Cartoon/Tone Based Shading" {
         Tags { "RenderType"="Opaque" }
         LOD 200
  
-        Pass {
-        	Tags { "LightMode"="ForwardBase" }
-        	
-        	Cull Front
-    		ZWrite On
- 
-            CGPROGRAM
-            
-            #pragma vertex vert
-            #pragma fragment frag
-            
-            #include "UnityCG.cginc"
-            
-            #pragma multi_compile_fwdbase
-           	
-            float _Outline;
- 
-            struct a2v {
-                float4 vertex : POSITION;
-                float3 normal : NORMAL;
-            }; 
- 
-            struct v2f {
-                float4 pos : POSITION;
-            };
- 
-            v2f vert (a2v v) {
-                v2f o;
-
-                float4 pos = mul( UNITY_MATRIX_MV, v.vertex); 
-				float3 normal = mul( (float3x3)UNITY_MATRIX_IT_MV, v.normal);  
-				normal.z = -0.5;
-				pos = pos + float4(normalize(normal),0) * _Outline;
-				o.pos = mul(UNITY_MATRIX_P, pos);
-				
-                return o;
-            }
- 
-            float4 frag(v2f i) : COLOR { 
-            	return float4(0, 0, 0, 1);               
-            } 
- 
-            ENDCG
-        }
+        UsePass "NPR/Cartoon/Antialiased Cel Shading/OUTLINE"
         
         Pass {
 			Tags { "LightMode"="ForwardBase" }
@@ -98,10 +56,7 @@ Shader "NPR/Cartoon/Tone Based Shading" {
 				float2 uv : TEXCOORD0;
 				float3 worldNormal : TEXCOORD1;
 				float3 worldPos : TEXCOORD2;
-				// The macro in Unity 4
-				LIGHTING_COORDS(3, 4)
-				// Or use macro in Unity 5
-//                SHADOW_COORDS(3)
+                SHADOW_COORDS(3)
 			};
 			
 			v2f vert (a2v v) {
@@ -112,11 +67,7 @@ Shader "NPR/Cartoon/Tone Based Shading" {
 				o.worldPos = mul(_Object2World, v.vertex).xyz;
 				o.uv = TRANSFORM_TEX (v.texcoord, _MainTex);  
 				
-				// The macro in Unity 4
-				// Pass lighting information to pixel shader
-  				TRANSFER_VERTEX_TO_FRAGMENT(o);
-  				// Or use the macro in Unity 5
-//                TRANSFER_SHADOW(o);
+                TRANSFER_SHADOW(o);
 
 				return o;
 			}
@@ -131,10 +82,7 @@ Shader "NPR/Cartoon/Tone Based Shading" {
 
 				fixed3 ambient = UNITY_LIGHTMODEL_AMBIENT.xyz;
 				
-				// The macro in Unity 4
-				fixed atten = LIGHT_ATTENUATION(i);
-				//  Or use the macro in Unity 5
-//                UNITY_LIGHT_ATTENUATION(atten, i, i.worldPos);
+                UNITY_LIGHT_ATTENUATION(atten, i, i.worldPos);
 
 				fixed diff =  dot (worldNormal, worldLightDir);
 				diff = (diff * 0.5 + 0.5) * atten;
@@ -194,10 +142,7 @@ Shader "NPR/Cartoon/Tone Based Shading" {
 				float2 uv : TEXCOORD0;
 				float3 worldNormal : TEXCOORD1;
 				float3 worldPos : TEXCOORD2;
-				// The macro in Unity 4
-				LIGHTING_COORDS(3, 4)
-				// Or use macro in Unity 5
-//                SHADOW_COORDS(3)
+                SHADOW_COORDS(3)
 			};
 			
 			v2f vert (a2v v) {
@@ -208,11 +153,7 @@ Shader "NPR/Cartoon/Tone Based Shading" {
 				o.worldPos = mul(_Object2World, v.vertex).xyz;
 				o.uv = TRANSFORM_TEX (v.texcoord, _MainTex);  
 				
-				// The macro in Unity 4
-				// Pass lighting information to pixel shader
-  				TRANSFER_VERTEX_TO_FRAGMENT(o);
-  				// Or use the macro in Unity 5
-//                TRANSFER_SHADOW(o);
+                TRANSFER_SHADOW(o);
 
 				return o;
 			}
@@ -225,10 +166,7 @@ Shader "NPR/Cartoon/Tone Based Shading" {
 				
 				fixed4 c = tex2D (_MainTex, i.uv);
 				
-				// The macro in Unity 4
-				fixed atten = LIGHT_ATTENUATION(i);
-				//  Or use the macro in Unity 5
-//                UNITY_LIGHT_ATTENUATION(atten, i, i.worldPos);
+                UNITY_LIGHT_ATTENUATION(atten, i, i.worldPos);
 
 				fixed diff =  dot (worldNormal, worldLightDir);
 				diff = (diff * 0.5 + 0.5) * atten;
