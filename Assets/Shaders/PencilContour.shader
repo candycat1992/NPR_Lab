@@ -1,4 +1,8 @@
-﻿Shader "NPR/Pencil Sketch/Pencil Contour" {
+﻿///
+///  Reference: 	Lee H, Kwon S, Lee S. Real-time pencil rendering[C]
+///						Proceedings of the 4th international symposium on Non-photorealistic animation and rendering. ACM, 2006: 37-45.
+/// 
+Shader "NPR/Pencil Sketch/Pencil Contour" {
 	Properties {
 		_MainTex ("Base (RGB)", 2D) = "white" {}
 		_NoiseTex ("Noise Tex", 2D) = "black" {}
