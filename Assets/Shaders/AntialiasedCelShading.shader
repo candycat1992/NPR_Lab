@@ -7,16 +7,16 @@ Shader "NPR/Cartoon/Antialiased Cel Shading" {
 		_Outline ("Outline", Range(0,1)) = 0.1
 		_OutlineColor ("Outline Color", Color) = (0, 0, 0, 1)
 		_DiffuseColor ("Diffuse Color", Color) = (1, 1, 1, 1)
-        _SpecularColor ("Specular Color", Color) = (1, 1, 1, 1)
-        _Shininess ("Shininess", Range(1, 500)) = 40
-        _DiffuseSegment ("Diffuse Segment", Vector) = (0.1, 0.3, 0.6, 1.0)
-        _SpecularSegment ("Specular Segment", Range(0, 1)) = 0.5
-    }
-    SubShader {
-        Tags { "RenderType"="Opaque" }
-        LOD 200
-        
-        Pass {
+		_SpecularColor ("Specular Color", Color) = (1, 1, 1, 1)
+		_Shininess ("Shininess", Range(1, 500)) = 40
+		_DiffuseSegment ("Diffuse Segment", Vector) = (0.1, 0.3, 0.6, 1.0)
+		_SpecularSegment ("Specular Segment", Range(0, 1)) = 0.5
+	}
+	SubShader {
+		Tags { "RenderType"="Opaque" }
+		LOD 200
+		
+		Pass {
 			NAME "OUTLINE"
 			
 			Cull Front
@@ -37,7 +37,7 @@ Shader "NPR/Cartoon/Antialiased Cel Shading" {
 			}; 
 			
 			struct v2f {
-			    float4 pos : SV_POSITION;
+				float4 pos : SV_POSITION;
 			};
 			
 			v2f vert (a2v v) {
@@ -59,21 +59,21 @@ Shader "NPR/Cartoon/Antialiased Cel Shading" {
 			ENDCG
 		}
  
-        Pass {
+		Pass {
 			Tags { "LightMode"="ForwardBase" }
-
+		
 			CGPROGRAM
-
+		
 			#pragma vertex vert
 			#pragma fragment frag
 			
 			#pragma multi_compile_fwdbase
-
+		
 			#include "UnityCG.cginc"
 			#include "Lighting.cginc"
 			#include "AutoLight.cginc"
 			#include "UnityShaderVariables.cginc"
-
+		
 			fixed4 _DiffuseColor;
 			sampler2D _MainTex;
 			float4 _MainTex_ST;
@@ -81,44 +81,42 @@ Shader "NPR/Cartoon/Antialiased Cel Shading" {
 			float _Shininess;
 			fixed4 _DiffuseSegment;
 			fixed _SpecularSegment;
- 
- 			struct a2v {
+		
+			struct a2v {
 				float4 vertex : POSITION;
 				float3 normal : NORMAL;
 				float4 texcoord : TEXCOORD0;
 			}; 
-
+		
 			struct v2f {
 				float4 pos : SV_POSITION;
 				float2 uv : TEXCOORD0;
 				fixed3 worldNormal : TEXCOORD1;
 				float3 worldPos : TEXCOORD2;
-                SHADOW_COORDS(3)
+				SHADOW_COORDS(3)
 			};
 			
-			v2f vert (a2v v)
-			{
+			v2f vert (a2v v) {
 				v2f o;
-
+				
 				o.pos = mul( UNITY_MATRIX_MVP, v.vertex); 
 				o.worldNormal  = mul(v.normal, (float3x3)_World2Object);
 				o.worldPos = mul(_Object2World, v.vertex).xyz;
 				o.uv = TRANSFORM_TEX (v.texcoord, _MainTex);
 				
-                TRANSFER_SHADOW(o);
-                
+		    	TRANSFER_SHADOW(o);
+		    	
 				return o;
 			}
 			
-			fixed4 frag(v2f i) : SV_Target  
-			{ 
+			fixed4 frag(v2f i) : SV_Target { 
 				fixed3 worldNormal = normalize(i.worldNormal);
 				fixed3 worldLightDir = UnityWorldSpaceLightDir(i.worldPos);
 				fixed3 worldViewDir = UnityWorldSpaceViewDir(i.worldPos);
 				fixed3 worldHalfDir = normalize(worldViewDir + worldLightDir);
 				
-                UNITY_LIGHT_ATTENUATION(atten, i, i.worldPos);
-                
+		    	UNITY_LIGHT_ATTENUATION(atten, i, i.worldPos);
+		    	
 				fixed diff = dot(worldNormal, worldLightDir);
 				diff = diff * 0.5 + 0.5;
 				fixed spec = max(0, dot(worldNormal, worldHalfDir));
@@ -154,7 +152,7 @@ Shader "NPR/Cartoon/Antialiased Cel Shading" {
 				
 				return fixed4(ambient + (diffuse + specular) * atten, 1);
 			}
-
+		
 			ENDCG
 		}
 		
@@ -162,20 +160,20 @@ Shader "NPR/Cartoon/Antialiased Cel Shading" {
 			Tags { "LightMode"="ForwardAdd" }
 			
 			Blend One One
-
+			
 			CGPROGRAM
-
+			
 			#pragma vertex vert
 			#pragma fragment frag
 			
 			#pragma multi_compile_fwdadd
-
+			
 			#include "UnityCG.cginc"
 			#include "Lighting.cginc"
 			#include "AutoLight.cginc"
 			#include "UnityShaderVariables.cginc"
 			
-
+			
 			fixed4 _DiffuseColor;
 			sampler2D _MainTex;
 			float4 _MainTex_ST;
@@ -183,32 +181,32 @@ Shader "NPR/Cartoon/Antialiased Cel Shading" {
 			float _Shininess;
 			fixed4 _DiffuseSegment;
 			fixed _SpecularSegment;
- 
- 			struct a2v {
+			
+			struct a2v {
 				float4 vertex : POSITION;
 				float3 normal : NORMAL;
 				float4 texcoord : TEXCOORD0;
 			}; 
-
+			
 			struct v2f {
 				float4 pos : SV_POSITION;
 				float2 uv : TEXCOORD0;
 				fixed3 worldNormal : TEXCOORD1;
 				float3 worldPos : TEXCOORD2;
-                SHADOW_COORDS(3)
+			    SHADOW_COORDS(3)
 			};
 			
 			v2f vert (a2v v)
 			{
 				v2f o;
-
+			
 				o.pos = mul( UNITY_MATRIX_MVP, v.vertex); 
 				o.worldNormal  = mul(v.normal, (float3x3)_World2Object);
 				o.worldPos = mul(_Object2World, v.vertex).xyz;
 				o.uv = TRANSFORM_TEX (v.texcoord, _MainTex);
 				
-                TRANSFER_SHADOW(o);
-                
+			    TRANSFER_SHADOW(o);
+			    
 				return o;
 			}
 			
@@ -219,8 +217,8 @@ Shader "NPR/Cartoon/Antialiased Cel Shading" {
 				fixed3 worldViewDir = UnityWorldSpaceViewDir(i.worldPos);
 				fixed3 worldHalfDir = normalize(worldViewDir + worldLightDir);
 				
-                UNITY_LIGHT_ATTENUATION(atten, i, i.worldPos);
-                
+			    UNITY_LIGHT_ATTENUATION(atten, i, i.worldPos);
+			    
 				fixed diff = dot(worldNormal, worldLightDir);
 				diff = (diff * 0.5 + 0.5) * atten;
 				fixed spec = max(0, dot(worldNormal, worldHalfDir));
@@ -253,10 +251,10 @@ Shader "NPR/Cartoon/Antialiased Cel Shading" {
 				
 				return fixed4((diffuse + specular) * atten, 1);
 			}
-
+			
 			ENDCG
 		}
-    }
-    
-    FallBack "Diffuse"	    
+	}
+	
+	FallBack "Diffuse"	    
 }
