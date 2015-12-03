@@ -18,7 +18,7 @@ Shader "NPR/Pencil Sketch/Hatching" {
 	
 	SubShader {
 		Tags { "RenderType"="Opaque" }
-        LOD 200
+		LOD 200
         
 		UsePass "NPR/Cartoon/Antialiased Cel Shading/OUTLINE"
         

@@ -196,8 +196,7 @@ Shader "NPR/Cartoon/Antialiased Cel Shading" {
 				SHADOW_COORDS(3)
 			};
 			
-			v2f vert (a2v v)
-			{
+			v2f vert (a2v v) {
 				v2f o;
 			
 				o.pos = mul( UNITY_MATRIX_MVP, v.vertex); 
@@ -210,8 +209,7 @@ Shader "NPR/Cartoon/Antialiased Cel Shading" {
 				return o;
 			}
 			
-			fixed4 frag(v2f i) : SV_Target  
-			{ 
+			fixed4 frag(v2f i) : SV_Target { 
 				fixed3 worldNormal = normalize(i.worldNormal);
 				fixed3 worldLightDir = UnityWorldSpaceLightDir(i.worldPos);
 				fixed3 worldViewDir = UnityWorldSpaceViewDir(i.worldPos);
