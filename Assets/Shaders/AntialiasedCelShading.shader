@@ -104,7 +104,7 @@ Shader "NPR/Cartoon/Antialiased Cel Shading" {
 				o.worldPos = mul(_Object2World, v.vertex).xyz;
 				o.uv = TRANSFORM_TEX (v.texcoord, _MainTex);
 				
-		    	TRANSFER_SHADOW(o);
+				TRANSFER_SHADOW(o);
 		    	
 				return o;
 			}
@@ -115,7 +115,7 @@ Shader "NPR/Cartoon/Antialiased Cel Shading" {
 				fixed3 worldViewDir = UnityWorldSpaceViewDir(i.worldPos);
 				fixed3 worldHalfDir = normalize(worldViewDir + worldLightDir);
 				
-		    	UNITY_LIGHT_ATTENUATION(atten, i, i.worldPos);
+				UNITY_LIGHT_ATTENUATION(atten, i, i.worldPos);
 		    	
 				fixed diff = dot(worldNormal, worldLightDir);
 				diff = diff * 0.5 + 0.5;
@@ -193,7 +193,7 @@ Shader "NPR/Cartoon/Antialiased Cel Shading" {
 				float2 uv : TEXCOORD0;
 				fixed3 worldNormal : TEXCOORD1;
 				float3 worldPos : TEXCOORD2;
-			    SHADOW_COORDS(3)
+				SHADOW_COORDS(3)
 			};
 			
 			v2f vert (a2v v)
@@ -205,8 +205,8 @@ Shader "NPR/Cartoon/Antialiased Cel Shading" {
 				o.worldPos = mul(_Object2World, v.vertex).xyz;
 				o.uv = TRANSFORM_TEX (v.texcoord, _MainTex);
 				
-			    TRANSFER_SHADOW(o);
-			    
+				TRANSFER_SHADOW(o);
+				
 				return o;
 			}
 			
@@ -217,8 +217,8 @@ Shader "NPR/Cartoon/Antialiased Cel Shading" {
 				fixed3 worldViewDir = UnityWorldSpaceViewDir(i.worldPos);
 				fixed3 worldHalfDir = normalize(worldViewDir + worldLightDir);
 				
-			    UNITY_LIGHT_ATTENUATION(atten, i, i.worldPos);
-			    
+				UNITY_LIGHT_ATTENUATION(atten, i, i.worldPos);
+				
 				fixed diff = dot(worldNormal, worldLightDir);
 				diff = (diff * 0.5 + 0.5) * atten;
 				fixed spec = max(0, dot(worldNormal, worldHalfDir));
