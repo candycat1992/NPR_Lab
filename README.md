@@ -50,6 +50,10 @@ Screenshots:
 
 <center>![alt text](https://github.com/candycat1992/NPR_Lab/blob/master/SceneImages/StylizedHighlightsScene.png)</center>
 
+Operation Example:
+
+<center>![alt text](https://github.com/candycat1992/NPR_Lab/blob/master/SceneImages/OperationExample.png)</center>
+
 ## Pencil Sketch Shading
 
 Related Scenes:
