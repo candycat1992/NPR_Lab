@@ -114,17 +114,17 @@ Shader "NPR/Cartoon/Stylized Highlights" {
 				
 				// Ratation
 				float xRad = _RotationX * DegreeToRadian;
-				float3x3 xRotation = float3x3(	1, 					0, 					0,
-																	0, 		cos(xRad), 	sin(xRad),
-																	0, 		-sin(xRad), 	cos(xRad));
+				float3x3 xRotation = float3x3(1, 0, 0,
+													 0, cos(xRad), sin(xRad),
+													 0, -sin(xRad), cos(xRad));
 				float yRad = _RotationY * DegreeToRadian;
-				float3x3 yRotation = float3x3(	cos(yRad), 	0, 		-sin(yRad),
-																	0, 					1, 					0,
-																	sin(yRad), 	0, 		cos(yRad));
+				float3x3 yRotation = float3x3(cos(yRad), 0, -sin(yRad),
+													 0, 1, 0,
+													 sin(yRad), 0, cos(yRad));
 				float zRad = _RotationZ * DegreeToRadian;
-				float3x3 zRotation = float3x3(	cos(zRad), 	sin(zRad), 	0,
-																	-sin(zRad), 	cos(zRad), 	0,
-																	0, 					0, 					1);								
+				float3x3 zRotation = float3x3(cos(zRad), sin(zRad), 0,
+													 -sin(zRad), cos(zRad), 0,
+													 0, 0, 1);								
 				tangentHalfDir = mul(zRotation, mul(yRotation, mul(xRotation, tangentHalfDir)));
 				
 				// Translation
@@ -260,17 +260,17 @@ Shader "NPR/Cartoon/Stylized Highlights" {
 				
 				// Ratation
 				float xRad = _RotationX * DegreeToRadian;
-				float3x3 xRotation = float3x3(	1, 					0, 					0,
-																	0, 		cos(xRad), 	sin(xRad),
-																	0, 		-sin(xRad), 	cos(xRad));
+				float3x3 xRotation = float3x3(1, 0, 0,
+													 0, cos(xRad), sin(xRad),
+													 0, -sin(xRad), cos(xRad));
 				float yRad = _RotationY * DegreeToRadian;
-				float3x3 yRotation = float3x3(	cos(yRad), 	0, 		-sin(yRad),
-																	0, 					1, 					0,
-																	sin(yRad), 	0, 		cos(yRad));
+				float3x3 yRotation = float3x3(cos(yRad), 0, -sin(yRad),
+													 0, 1, 0,
+													 sin(yRad), 0, cos(yRad));
 				float zRad = _RotationZ * DegreeToRadian;
-				float3x3 zRotation = float3x3(	cos(zRad), 	sin(zRad), 	0,
-																	-sin(zRad), 	cos(zRad), 	0,
-																	0, 					0, 					1);								
+				float3x3 zRotation = float3x3(cos(zRad), sin(zRad), 0,
+													 -sin(zRad), cos(zRad), 0,
+													 0, 0, 1);						
 				tangentHalfDir = mul(zRotation, mul(yRotation, mul(xRotation, tangentHalfDir)));
 				
 				// Translation

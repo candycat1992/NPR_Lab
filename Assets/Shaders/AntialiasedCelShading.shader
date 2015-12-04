@@ -138,9 +138,9 @@ Shader "NPR/Cartoon/Antialiased Cel Shading" {
 				
 				w = fwidth(spec);
 				if (spec < _SpecularSegment + w) {
-					spec = lerp(0, _SpecularSegment, smoothstep(_SpecularSegment - w, _SpecularSegment + w, spec));
+					spec = lerp(0, 1, smoothstep(_SpecularSegment - w, _SpecularSegment + w, spec));
 				} else {
-					spec = _SpecularSegment;
+					spec = 1;
 				}
 				
 				fixed3 ambient = UNITY_LIGHTMODEL_AMBIENT;
