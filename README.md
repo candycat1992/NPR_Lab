@@ -97,6 +97,22 @@ Screenshots:
 <center>![alt text](https://github.com/candycat1992/NPR_Lab/blob/master/SceneImages/PencilContourScene.png)</center>
 <center>![alt text](https://github.com/candycat1992/NPR_Lab/blob/master/SceneImages/ContourZoom.png)</center>
 
+## Wireframe
+
+Related Scenes:
+
+1. WireframeScene
+
+References:
+
+[1] http://prideout.net/blog/?p=48
+[2] http://scrawkblog.com/2013/03/18/wireframe-shader-for-unity/
+[3] Bærentzen A, Nielsen S L, Gjøl M, et al. Single-pass wireframe rendering[C]//ACM SIGGRAPH 2006 Sketches. ACM, 2006: 149.
+
+Screenshots:
+
+<center>![alt text](https://github.com/candycat1992/NPR_Lab/blob/master/SceneImages/WireframeScene.png)</center>
+
 # More Info
 
 For more information, please visit http://blog.csdn.net/candycat1992.
