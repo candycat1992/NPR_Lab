@@ -76,14 +76,14 @@
 
 				o.pos = IN[1].pos;
 				o.uv = IN[1].uv;
-				o.worldPos = IN[0].worldPos;
+				o.worldPos = IN[1].worldPos;
 				o.dist = float3(0,area/length(v1),0);
 				o.faceNormal = fn;
 				triStream.Append(o);
 
 				o.pos = IN[2].pos;
 				o.uv = IN[2].uv;
-				o.worldPos = IN[0].worldPos;
+				o.worldPos = IN[2].worldPos;
 				o.dist = float3(0,0,area/length(v2));
 				o.faceNormal = fn;
 				triStream.Append(o);
