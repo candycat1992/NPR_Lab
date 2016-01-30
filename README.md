@@ -97,6 +97,16 @@ Screenshots:
 <center>![alt text](https://github.com/candycat1992/NPR_Lab/blob/master/SceneImages/PencilContourScene.png)</center>
 <center>![alt text](https://github.com/candycat1992/NPR_Lab/blob/master/SceneImages/ContourZoom.png)</center>
 
+## Low polygon
+
+Related Scenes:
+
+1. LowPolygonScene
+
+Screenshots:
+
+<center>![alt text](https://github.com/candycat1992/NPR_Lab/blob/master/SceneImages/LowPolygonScene.png)</center>
+
 ## Wireframe
 
 Related Scenes:
