@@ -20,7 +20,7 @@ References:
 
 Screenshots:
 
-<center>![alt text](https://github.com/candycat1992/NPR_Lab/blob/master/SceneImages/AntialiasedCelShadingScene.png)</center>
+![alt text](https://github.com/candycat1992/NPR_Lab/blob/master/SceneImages/AntialiasedCelShadingScene.png)
 
 ## Tone Based Shading
 
@@ -34,7 +34,7 @@ References:
 
 Screenshots:
 
-<center>![alt text](https://github.com/candycat1992/NPR_Lab/blob/master/SceneImages/ToneBasedShadingScene.png)</center>
+![alt text](https://github.com/candycat1992/NPR_Lab/blob/master/SceneImages/ToneBasedShadingScene.png)
 
 ## Stylized Highlights
 
@@ -48,11 +48,11 @@ References:
 
 Screenshots:
 
-<center>![alt text](https://github.com/candycat1992/NPR_Lab/blob/master/SceneImages/StylizedHighlightsScene.png)</center>
+![alt text](https://github.com/candycat1992/NPR_Lab/blob/master/SceneImages/StylizedHighlightsScene.png)
 
 Operation Example:
 
-<center>![alt text](https://github.com/candycat1992/NPR_Lab/blob/master/SceneImages/OperationExample.png)</center>
+![alt text](https://github.com/candycat1992/NPR_Lab/blob/master/SceneImages/OperationExample.png)
 
 ## Pencil Sketch Shading
 
@@ -66,7 +66,7 @@ References:
 
 Screenshots:
 
-<center>![alt text](https://github.com/candycat1992/NPR_Lab/blob/master/SceneImages/PencilSketchScene.png)</center>
+![alt text](https://github.com/candycat1992/NPR_Lab/blob/master/SceneImages/PencilSketchScene.png)
 
 ## Hatching
 
@@ -80,7 +80,7 @@ References:
 
 Screenshots:
 
-<center>![alt text](https://github.com/candycat1992/NPR_Lab/blob/master/SceneImages/HatchingScene.png)</center>
+![alt text](https://github.com/candycat1992/NPR_Lab/blob/master/SceneImages/HatchingScene.png)
 
 ## Pencil Contour
 
@@ -94,8 +94,8 @@ References:
 
 Screenshots:
 
-<center>![alt text](https://github.com/candycat1992/NPR_Lab/blob/master/SceneImages/PencilContourScene.png)</center>
-<center>![alt text](https://github.com/candycat1992/NPR_Lab/blob/master/SceneImages/ContourZoom.png)</center>
+![alt text](https://github.com/candycat1992/NPR_Lab/blob/master/SceneImages/PencilContourScene.png)
+![alt text](https://github.com/candycat1992/NPR_Lab/blob/master/SceneImages/ContourZoom.png)
 
 ## Low polygon
 
@@ -106,8 +106,7 @@ Related Scenes:
 
 Screenshots:
 
-<center>![alt text](https://github.com/candycat1992/NPR_Lab/blob/master/SceneImages/LowPolygonGeometryScene.png)</center>
-<center>![alt text](https://github.com/candycat1992/NPR_Lab/blob/master/SceneImages/LowPolygonNoSharedVerticesScene.png)</center>
+![alt text](https://github.com/candycat1992/NPR_Lab/blob/master/SceneImages/LowPolygonGeometryScene.png) ![alt text](https://github.com/candycat1992/NPR_Lab/blob/master/SceneImages/LowPolygonNoSharedVerticesScene.png)
 
 References:
 
@@ -129,7 +128,7 @@ References:
 
 Screenshots:
 
-<center>![alt text](https://github.com/candycat1992/NPR_Lab/blob/master/SceneImages/WireframeScene.png)</center>
+![alt text](https://github.com/candycat1992/NPR_Lab/blob/master/SceneImages/WireframeScene.png)
 
 # More Info
 
