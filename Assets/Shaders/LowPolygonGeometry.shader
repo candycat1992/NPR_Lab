@@ -1,4 +1,4 @@
-﻿Shader "NPR/Low Polygon" {
+﻿Shader "NPR/Low Polygon With Geometry Shader" {
 	Properties {
 		_Color ("Color Tint", Color) = (1, 1, 1, 1)
 	}

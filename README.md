@@ -101,11 +101,17 @@ Screenshots:
 
 Related Scenes:
 
-1. LowPolygonScene
+1. LowPolygonGeometryScene (Flat shading by using geometry shader)
+2. LowPolygonNoSharedVerticesScene (Flat shading by convert any mesh to the one with no-shared vertices. Convert window: Window -> Convert to No-Shared Vertices Mesh)
 
 Screenshots:
 
-<center>![alt text](https://github.com/candycat1992/NPR_Lab/blob/master/SceneImages/LowPolygonScene.png)</center>
+<center>![alt text](https://github.com/candycat1992/NPR_Lab/blob/master/SceneImages/LowPolygonGeometryScene.png)</center>
+<center>![alt text](https://github.com/candycat1992/NPR_Lab/blob/master/SceneImages/LowPolygonNoSharedVerticesScene.png)</center>
+
+References:
+
+[1] http://answers.unity3d.com/questions/798510/flat-shading.html
 
 ## Wireframe
 
