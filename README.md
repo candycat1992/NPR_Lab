@@ -102,7 +102,7 @@ Screenshots:
 Related Scenes:
 
 1. LowPolygonGeometryScene (Flat shading by using geometry shader)
-2. LowPolygonNoSharedVerticesScene (Flat shading by convert any mesh to the one with no-shared vertices. Convert window: Window -> Convert to No-Shared Vertices Mesh)
+2. LowPolygonNoSharedVerticesScene (Flat shading by converting any mesh to one with no-shared vertices. Open: _Window -> Convert to No-Shared Vertices Mesh_)
 
 Screenshots:
 
